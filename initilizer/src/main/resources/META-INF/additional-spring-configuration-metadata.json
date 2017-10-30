@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "import.trainingImageFile",
+    "type": "java.lang.String",
+    "description": "Name of the file that contains the images training set"
+  },
+  {
+    "name": "import.trainingLabelFile",
+    "type": "java.lang.String",
+    "description": "Name of the file that contains the training set labels"
+  },
+  {
+    "name": "import.testImageFile",
+    "type": "java.lang.String",
+    "description": "Name of the file that contains the images test set"
+  },
+  {
+    "name": "import.testLabelFile",
+    "type": "java.lang.String",
+    "description": "Name of the file that contains the test set labels"
+  },
+  {
+    "name": "import.devSetSize",
+    "type": "java.lang.String",
+    "description": "Size of the dev set"
+  }
+]}
