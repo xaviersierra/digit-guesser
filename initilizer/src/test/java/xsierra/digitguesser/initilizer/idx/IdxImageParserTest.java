@@ -1,4 +1,4 @@
-package xsierra.digitguesser.initilizer;
+package xsierra.digitguesser.initilizer.idx;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import xsierra.digitguesser.initilizer.ImportProperties;
+import xsierra.digitguesser.initilizer.ImportSamplesException;
+import xsierra.digitguesser.initilizer.domain.Sample;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

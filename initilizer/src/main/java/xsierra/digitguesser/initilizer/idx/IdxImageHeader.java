@@ -1,4 +1,4 @@
-package xsierra.digitguesser.initilizer;
+package xsierra.digitguesser.initilizer.idx;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,7 +1,9 @@
 package xsierra.digitguesser.initilizer;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
+@Component
 @ConfigurationProperties("import")
 public class ImportProperties {
 	
