@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SampleDAOTest {
+public class SampleH2DAOImplTest {
 
 	@Autowired
 	private JdbcTemplate template;
@@ -29,14 +29,16 @@ public class SampleDAOTest {
 	@After
 	public void tearDown() {
 		template.execute("DELETE FROM train_sample");
+		template.execute("DELETE FROM dev_sample");
+		template.execute("DELETE FROM test_sample");
 	}
 
 	@Test
-	public void testSaveSamples() {
+	public void testSaveTrainSamples() {
 
 		List<Sample> samples = generateSamples(100);
 
-		dao.saveSamples(samples);
+		dao.saveTrainSamples(samples);
 
 		int numberOfSamples = template.queryForObject("SELECT count(*) FROM train_sample", Integer.class);
 
@@ -44,12 +46,60 @@ public class SampleDAOTest {
 	}
 
 	@Test
-	public void testListAllSamples() {
+	public void testListAllTrainSamples() {
 
 		List<Sample> samples = generateSamples(10);
-		dao.saveSamples(samples);
+		dao.saveTrainSamples(samples);
 
-		List<Sample> obtainedSamples = dao.readAllSamples();
+		List<Sample> obtainedSamples = dao.readAllTraningSamples();
+
+		assertEquals(10, obtainedSamples.size());
+
+	}
+	
+	@Test
+	public void testSaveTestSamples() {
+
+		List<Sample> samples = generateSamples(100);
+
+		dao.saveTestSamples(samples);
+
+		int numberOfSamples = template.queryForObject("SELECT count(*) FROM test_sample", Integer.class);
+
+		assertEquals(100, numberOfSamples);
+	}
+
+	@Test
+	public void testListAllTestSamples() {
+
+		List<Sample> samples = generateSamples(10);
+		dao.saveTestSamples(samples);
+
+		List<Sample> obtainedSamples = dao.readAllTestSamples();
+
+		assertEquals(10, obtainedSamples.size());
+
+	}
+	
+	@Test
+	public void testDevTestSamples() {
+
+		List<Sample> samples = generateSamples(100);
+
+		dao.saveDevSamples(samples);
+
+		int numberOfSamples = template.queryForObject("SELECT count(*) FROM dev_sample", Integer.class);
+
+		assertEquals(100, numberOfSamples);
+	}
+
+	@Test
+	public void testListAllDevSamples() {
+
+		List<Sample> samples = generateSamples(10);
+		dao.saveDevSamples(samples);
+
+		List<Sample> obtainedSamples = dao.readAllDevSamples();
 
 		assertEquals(10, obtainedSamples.size());
 
