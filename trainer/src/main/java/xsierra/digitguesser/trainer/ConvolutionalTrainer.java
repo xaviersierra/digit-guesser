@@ -16,7 +16,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Service
 public class ConvolutionalTrainer {
 
-    private static final Logger log = getLogger(LenetMnistExample.class);
+    private static final Logger log = getLogger(ConvolutionalTrainer.class);
 
     private SampleDAO sampleDao;
 

@@ -63,8 +63,8 @@ public class ImageSetIterator implements DataSetIterator{
         }
 
 
-        INDArray features = Transforms.normalizeZeroMeanAndUnitVariance(Nd4j.create(featureData));
-//        INDArray features = Nd4j.create(featureData);
+//        INDArray features = Transforms.normalizeZeroMeanAndUnitVariance(Nd4j.create(featureData));
+        INDArray features = Nd4j.create(featureData);
         INDArray labels = Nd4j.create(labelData);
 
         return new DataSet(features, labels);

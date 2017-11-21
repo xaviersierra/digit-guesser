@@ -9,9 +9,18 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>initilizer</module>
         <module>trainer</module>
+        <module>drawer</module>
     </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
 

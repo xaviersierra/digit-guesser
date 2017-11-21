@@ -45,8 +45,13 @@ public class Sample {
 		int[] imgPixels = new int[numberOfPixels];
 		for (int p = 0; p < numberOfPixels; p++) {
 			int gray = 255 - imageSetInputStream.read();
+			if (gray > 30){
+				imgPixels[p] = 1;
+			} else {
+				imgPixels[p] = 0;
+			}
 			//imgPixels[p] = 0xFF000000 | (gray << 16) | (gray << 8) | gray;
-			imgPixels[p] = gray;
+
 		}
 		sample.setImage(imgPixels);
 		int label = labelSetInputStream.read();

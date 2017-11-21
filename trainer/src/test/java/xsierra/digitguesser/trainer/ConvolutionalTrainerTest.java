@@ -9,6 +9,10 @@ import org.nd4j.linalg.dataset.api.iterator.DataSetIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import xsierra.digitguesser.Trainer;
 import xsierra.digitguesser.initializer.InitializerService;
@@ -33,6 +37,8 @@ public class ConvolutionalTrainerTest {
 
     private DataSetIterator mnistTest;
 
+    private DataSetIterator mnistDev;
+
     @Before
     public void init() throws Exception{
 
@@ -48,6 +54,9 @@ public class ConvolutionalTrainerTest {
 
         int batchSize = context.getHyperParameter(HyperParameter.BATCH_SIZE).intValue();
         mnistTest = iteratorBuilder.buildFromTestSet(batchSize);
+        mnistDev = iteratorBuilder.buildFromDevSet(batchSize);
+
+
     }
 
     @Test
@@ -57,9 +66,15 @@ public class ConvolutionalTrainerTest {
 
         Evaluation eval = model.evaluate(mnistTest);
 
-        assertThat(eval.accuracy()).isGreaterThan(0.97d);
+        assertThat(eval.accuracy()).isGreaterThan(0.95d);
 
-        System.out.println("Training accuracy=" + eval.accuracy());
+        System.out.println("Training accuracy test set=" + eval.accuracy());
+
+        eval = model.evaluate(mnistDev);
+
+        assertThat(eval.accuracy()).isGreaterThan(0.95d);
+
+        System.out.println("Training accuracy CV set=" + eval.accuracy());
 
     }
 
