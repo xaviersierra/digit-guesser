@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import xsierra.digitguesser.ServiceTestConfiguration;
 import xsierra.digitguesser.Trainer;
 import xsierra.digitguesser.initializer.InitializerService;
 import xsierra.digitguesser.initializer.domain.SampleDAO;
@@ -21,7 +22,8 @@ import xsierra.digitguesser.initializer.domain.SampleDAO;
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = ServiceTestConfiguration.class)
+@ActiveProfiles("test")
 public class ConvolutionalTrainerTest {
 
     @Autowired
@@ -68,13 +70,9 @@ public class ConvolutionalTrainerTest {
 
         assertThat(eval.accuracy()).isGreaterThan(0.95d);
 
-        System.out.println("Training accuracy test set=" + eval.accuracy());
-
         eval = model.evaluate(mnistDev);
 
         assertThat(eval.accuracy()).isGreaterThan(0.95d);
-
-        System.out.println("Training accuracy CV set=" + eval.accuracy());
 
     }
 

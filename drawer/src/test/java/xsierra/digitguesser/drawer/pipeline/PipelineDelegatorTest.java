@@ -1,4 +1,4 @@
-package xsierra.digitguesser.drawer;
+package xsierra.digitguesser.drawer.pipeline;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
+import xsierra.digitguesser.drawer.DigitGuesserService;
 import xsierra.digitguesser.drawer.pipeline.PipelineDelegator;
 import xsierra.digitguesser.drawer.pipeline.PipelineStep;
 

@@ -2,6 +2,8 @@ package xsierra.digitguesser;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+import xsierra.digitguesser.trainer.Context;
+import xsierra.digitguesser.trainer.HyperParameter;
 
 @Component
 @ConfigurationProperties("trainer")
@@ -76,5 +78,17 @@ public class TrainingProperties {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+
+    Context buildTrainingContext() {
+        Context trainingContext = new Context();
+        trainingContext.putHyperParameter(HyperParameter.BATCH_SIZE, Long.valueOf(getBatchSize()));
+        trainingContext.putHyperParameter(HyperParameter.NUMBER_OF_EPOCHS, Long.valueOf(getEpochs()));
+        trainingContext.putHyperParameter(HyperParameter.NUMBER_OF_ITERATIONS, Long.valueOf(getIterations()));
+        trainingContext.putHyperParameter(HyperParameter.RANDOM_SEED, Long.valueOf(getRandomSeed()));
+        trainingContext.putHyperParameter(HyperParameter.NUMBER_OF_CLASSES, Long.valueOf(getClasses()));
+        trainingContext.putHyperParameter(HyperParameter.NUMBER_OF_CHANNEL, Long.valueOf(getChannels()));
+        return trainingContext;
     }
 }

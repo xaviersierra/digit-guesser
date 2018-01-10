@@ -1,4 +1,4 @@
-package xsierra.digitguesser.drawer;
+package xsierra.digitguesser.drawer.pipeline;
 
 import org.assertj.core.data.Percentage;
 import org.junit.Before;
@@ -54,6 +54,9 @@ public class ResizeImageStepTest {
 
         assertThat(averagePixelImg1).isCloseTo(averagePixelImg2, Percentage.withPercentage(0.1));
         assertThat(img2).isNotEqualTo(img1);
+
+        assertThat(img2.getWidth()).isEqualTo(28);
+        assertThat(img2.getHeight()).isEqualTo(28);
 
     }
 

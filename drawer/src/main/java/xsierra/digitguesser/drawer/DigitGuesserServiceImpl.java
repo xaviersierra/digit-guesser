@@ -16,63 +16,34 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class DigitGuesserServiceImpl implements DigitGuesserService {
 
-    private ModelProperties modelProperties;
-
     private MultiLayerNetwork model;
 
     @Autowired
-    public DigitGuesserServiceImpl(ModelProperties modelProperties) {
-        this.modelProperties = modelProperties;
-    }
-
-    @PostConstruct
-    public void init() throws Exception{
-
-        File modelFile = new File(modelProperties.getPath());
-
-        if (!modelFile.exists()){
-            throw new RuntimeException("Model file does not exists");
-        }
-
-        model = ModelSerializer.restoreMultiLayerNetwork(modelFile);
+    public DigitGuesserServiceImpl(MultiLayerNetwork model) {
+        this.model = model;
     }
 
     @Override
     public byte guessDigit(BufferedImage image) {
 
-//        int[] pixels = image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
-//        System.out.println("pixels lenght: " + pixels.length);
+        int[] pixels = image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
 
-        int width = image.getWidth();
-        int height = image.getHeight();
+        pixels = Arrays.stream(pixels).map(p -> p & 0xff).map(p -> p < 30 ? 1: 0).toArray();
 
-        int[] pixels = new int[784];
-        for (int i = 0; i < width; i++){
-            for(int j = 0; j < height; j++){
-                int rgb = image.getRGB(i, j);
-                Color color = new Color(rgb, true);
-                double grayLevel = color.getRed() * 0.299 + color.getGreen() * 0.587 + color.getBlue() * 0.114;
-                if (color.getAlpha() > 30){
-                    pixels[i + (28 * j)] = 0;
-                } else {
-                    pixels[i + (28 * j)] = 1;
-                }
-//                pixels[i + (28 * j)] = color.getAlpha();
-            }
-        }
+        long zeroCount = Arrays.stream(pixels).boxed().filter(p -> p == 0).count();
+        long oneCount = Arrays.stream(pixels).boxed().filter(p -> p != 0).count();
 
-        System.out.println(Arrays.toString(Arrays.stream(pixels).distinct().toArray()));
+        System.out.println("Zeros: " + zeroCount);
+        System.out.println("Ones: " + oneCount);
 
         double[] dPixels = Arrays.stream(pixels).asDoubleStream().toArray();
-
-        System.out.println("Min value=" + Arrays.stream(dPixels).min().getAsDouble());
-        System.out.println("Max value=" + Arrays.stream(dPixels).max().getAsDouble());
-
-//        INDArray features = Transforms.normalizeZeroMeanAndUnitVariance(Nd4j.create(dPixels));
 
         INDArray features = Nd4j.create(dPixels);
 
@@ -86,9 +57,10 @@ public class DigitGuesserServiceImpl implements DigitGuesserService {
                 lastProbability = probability;
                 digit = i;
             }
-            System.out.println("index: " + i + " probability: " + probability);
         }
         return (byte) digit;
     }
+
+
 
 }

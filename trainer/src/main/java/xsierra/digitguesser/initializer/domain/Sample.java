@@ -44,7 +44,7 @@ public class Sample {
 
 		int[] imgPixels = new int[numberOfPixels];
 		for (int p = 0; p < numberOfPixels; p++) {
-			int gray = 255 - imageSetInputStream.read();
+			int gray = imageSetInputStream.read();
 			if (gray > 30){
 				imgPixels[p] = 1;
 			} else {

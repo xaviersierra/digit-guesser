@@ -6,6 +6,7 @@ import org.nd4j.linalg.factory.Nd4j;
 
 import static org.assertj.core.api.Assertions.*;
 
+
 public class ImageDataSetTest {
     @Test
     public void testStack() throws Exception {

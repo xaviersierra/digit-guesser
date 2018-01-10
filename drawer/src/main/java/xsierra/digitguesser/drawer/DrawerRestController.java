@@ -24,7 +24,7 @@ public class DrawerRestController {
         this.pipeline = pipeline;
     }
 
-    @RequestMapping(value = "/digit", method = RequestMethod.POST, consumes = MediaType.IMAGE_JPEG_VALUE)
+    @RequestMapping(value = "/digit", method = RequestMethod.POST, consumes = {MediaType.IMAGE_PNG_VALUE , MediaType.IMAGE_JPEG_VALUE})
     public @ResponseBody byte guessDigit(HttpServletRequest request) throws IOException {
 
         BufferedImage img = ImageIO.read(request.getInputStream());
